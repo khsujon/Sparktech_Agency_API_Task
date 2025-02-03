@@ -10,21 +10,19 @@ class CustomLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AlertDialog(
-        backgroundColor: Colors.black26,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircularProgressIndicator(),
-            SizedBox(height: 20),
-            Text('$loadingText...',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            Text('Please wait a second.',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-          ],
-        ),
+    return AlertDialog(
+      backgroundColor: Colors.black26,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircularProgressIndicator(),
+          SizedBox(height: 20),
+          Text('$loadingText...',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          SizedBox(height: 10),
+          Text('Please wait a second.',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        ],
       ),
     );
   }
