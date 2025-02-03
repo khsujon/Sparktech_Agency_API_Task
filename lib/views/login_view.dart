@@ -83,30 +83,55 @@ class LoginView extends StatelessWidget {
                   controller: _passwordController,
                 ),
                 SizedBox(
-                  height: height * 0.02,
+                  height: height * 0.1,
                 ),
-                ElevatedButton(
-                  onPressed: () async {
-                    try {
-                      await loginViewModel.login(
-                          _emailController.text, _passwordController.text);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserDetailsView(),
-                        ),
-                      );
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Center(
-                        child: Text(
-                          "Login failed, please check your credentials",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      )));
-                    }
-                  },
-                  child: Text('Login'),
+
+                // Login Button
+                SizedBox(
+                  width: width * 0.5,
+                  height: height * 0.06,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        await loginViewModel.login(
+                            _emailController.text, _passwordController.text);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UserDetailsView(),
+                          ),
+                        );
+                      } catch (e) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                content: Center(
+                          child: Text(
+                            "Login failed, please check your credentials",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        )));
+                      }
+
+                      _emailController.clear();
+                      _passwordController.clear();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      elevation: 5,
+                      shadowColor: Colors.black,
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Text(
+                      'Login',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
                 if (loginViewModel.isLoading)
                   CustomLoading(
