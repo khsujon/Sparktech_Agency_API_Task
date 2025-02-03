@@ -11,7 +11,6 @@ class CustomLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.black26,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

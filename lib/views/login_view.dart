@@ -95,6 +95,8 @@ class LoginView extends StatelessWidget {
                       try {
                         await loginViewModel.login(
                             _emailController.text, _passwordController.text);
+                        _emailController.clear();
+                        _passwordController.clear();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -111,9 +113,6 @@ class LoginView extends StatelessWidget {
                           ),
                         )));
                       }
-
-                      _emailController.clear();
-                      _passwordController.clear();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,

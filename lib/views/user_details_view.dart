@@ -34,7 +34,7 @@ class UserDetailsView extends StatelessWidget {
                   SizedBox(
                     height: height * 0.05,
                   ),
-                  // Profile Picture (Circular Avatar)
+                  // Profile Picture
                   Padding(
                     padding: EdgeInsets.all(width * 0.05),
                     child: CircleAvatar(
@@ -65,7 +65,9 @@ class UserDetailsView extends StatelessWidget {
                     style: TextStyle(fontSize: 18, color: Colors.grey),
                   ),
 
-                  SizedBox(height: 20),
+                  SizedBox(
+                    height: height * 0.03,
+                  ),
 
                   // Email
                   ListTile(
