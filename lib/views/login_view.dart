@@ -1,6 +1,7 @@
 import 'package:api_task/viewmodels/login_viewmodel.dart';
 import 'package:api_task/views/user_details_view.dart';
 import 'package:api_task/widgets/custom_loading.dart';
+import 'package:api_task/widgets/custom_text_filed.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,41 +12,109 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginViewModel = Provider.of<LoginViewModel>(context);
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email')),
-            TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  await loginViewModel.login(
-                      _emailController.text, _passwordController.text);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserDetailsView(),
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: height * 0.08,
+                ),
+                const Text(
+                  'Log in',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: height * 0.19,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: width * 0.06, bottom: height * 0.007),
+                      child: const Text(
+                        'Email',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  );
-                } catch (e) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(e.toString())));
-                }
-              },
-              child: Text('Login'),
+                  ],
+                ),
+
+                // Email Field
+                CustomTextField(
+                  hintText: 'Enter your email',
+                  obscure: false,
+                  controller: _emailController,
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: width * 0.06,
+                          top: height * 0.01,
+                          bottom: height * 0.007),
+                      child: const Text(
+                        'Password',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Password Field
+                CustomTextField(
+                  hintText: 'Enter your password',
+                  obscure: true,
+                  controller: _passwordController,
+                ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      await loginViewModel.login(
+                          _emailController.text, _passwordController.text);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserDetailsView(),
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Center(
+                        child: Text(
+                          "Login failed, please check your credentials",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      )));
+                    }
+                  },
+                  child: Text('Login'),
+                ),
+                if (loginViewModel.isLoading)
+                  CustomLoading(
+                    loadingText: "Login in",
+                  ),
+              ],
             ),
-            if (loginViewModel.isLoading)
-              CustomLoading(
-                loadingText: "Login in",
-              ),
-          ],
+          ),
         ),
       ),
     );
